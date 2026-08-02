@@ -317,7 +317,7 @@ button {
    5. Hero Section
    -------------------------------------------------------------------------- */
 .hero {
-  padding-top: 140px;
+  padding-top: 40px;
   padding-bottom: 80px;
   background: radial-gradient(circle at 90% 10%, rgba(225, 29, 72, 0.04) 0%, transparent 60%),
               radial-gradient(circle at 10% 80%, rgba(245, 158, 11, 0.04) 0%, transparent 60%);
@@ -397,23 +397,86 @@ button {
   position: relative;
 }
 
-.hero-img-wrapper {
+.hero-slider {
   position: relative;
+  height: 520px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   border: 4px solid var(--bg-primary);
 }
 
-.hero-img-wrapper img {
+.hero-slides {
+  position: relative;
   width: 100%;
-  height: 520px;
-  object-fit: cover;
-  transition: transform 0.6s ease;
+  height: 100%;
 }
 
-.hero-img-wrapper:hover img {
-  transform: scale(1.03);
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.6s ease-in-out;
+  transform: scale(1.04);
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-slide-caption {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(8px);
+  color: var(--text-white);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.825rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+.hero-slider-dots {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 15;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.hero-slider-dots .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hero-slider-dots .dot.active {
+  background: var(--accent-primary);
+  width: 26px;
+  border-radius: 10px;
 }
 
 .floating-badge {
@@ -1974,5 +2037,127 @@ button {
 
 .social-card-info h4 { font-size: 1.1rem; margin-bottom: 0.15rem; }
 .social-card-info p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+
+/* --------------------------------------------------------------------------
+   21. Infinite Sliding Image Marquee Banner (Below Header)
+   -------------------------------------------------------------------------- */
+.sliding-banner {
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  padding: 1.1rem 0;
+  margin-top: 80px; /* Space for fixed header */
+  position: relative;
+  box-shadow: inset 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+
+.sliding-banner::before,
+.sliding-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.sliding-banner::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-secondary), transparent);
+}
+
+.sliding-banner::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-secondary), transparent);
+}
+
+.sliding-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: marqueeSlide 28s linear infinite;
+}
+
+.sliding-banner:hover .sliding-track {
+  animation-play-state: paused;
+}
+
+.slide-item {
+  position: relative;
+  width: 230px;
+  height: 145px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--bg-primary);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.slide-item:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-primary);
+}
+
+.slide-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-badge {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  right: 0.6rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--text-white);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slide-badge i {
+  color: var(--accent-primary);
+}
+
+@keyframes marqueeSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .sliding-banner {
+    margin-top: 70px;
+    padding: 0.75rem 0;
+  }
+  .slide-item {
+    width: 175px;
+    height: 115px;
+  }
+  .slide-badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .hero {
+    padding-top: 30px;
+  }
+}
 
 

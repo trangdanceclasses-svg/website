@@ -61,6 +61,71 @@
   </header>
 
   <!-- ==========================================
+       INFINITE SLIDING IMAGE CAROUSEL (BELOW HEADER)
+       ========================================== -->
+  <div class="sliding-banner">
+    <div class="sliding-track">
+      <!-- Item 1: Hip Hop Dance -->
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=400&auto=format&fit=crop&q=80"
+          alt="Hip Hop Dance">
+        <span class="slide-badge"><i class="ri-fire-fill"></i> Hip Hop Dance</span>
+      </div>
+      <!-- Item 2: Acoustic Guitar -->
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&auto=format&fit=crop&q=80"
+          alt="Guitar Classes">
+        <span class="slide-badge"><i class="ri-music-fill"></i> Guitar Classes</span>
+      </div>
+      <!-- Item 3: Creative Art & Craft -->
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&auto=format&fit=crop&q=80"
+          alt="Art and Craft">
+        <span class="slide-badge"><i class="ri-palette-fill"></i> Art & Craft</span>
+      </div>
+      <!-- Item 4: Contemporary Dance -->
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&auto=format&fit=crop&q=80"
+          alt="Contemporary Flow">
+        <span class="slide-badge"><i class="ri-heart-pulse-fill"></i> Contemporary</span>
+      </div>
+      <!-- Item 5: Classical Ballet -->
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=400&auto=format&fit=crop&q=80"
+          alt="Ballet Grace">
+        <span class="slide-badge"><i class="ri-star-fill"></i> Classical Ballet</span>
+      </div>
+
+      <!-- Duplicate Set for 100% Seamless Infinite Loop -->
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=400&auto=format&fit=crop&q=80"
+          alt="Hip Hop Dance">
+        <span class="slide-badge"><i class="ri-fire-fill"></i> Hip Hop Dance</span>
+      </div>
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&auto=format&fit=crop&q=80"
+          alt="Guitar Classes">
+        <span class="slide-badge"><i class="ri-music-fill"></i> Guitar Classes</span>
+      </div>
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&auto=format&fit=crop&q=80"
+          alt="Art and Craft">
+        <span class="slide-badge"><i class="ri-palette-fill"></i> Art & Craft</span>
+      </div>
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&auto=format&fit=crop&q=80"
+          alt="Contemporary Flow">
+        <span class="slide-badge"><i class="ri-heart-pulse-fill"></i> Contemporary</span>
+      </div>
+      <div class="slide-item">
+        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=400&auto=format&fit=crop&q=80"
+          alt="Ballet Grace">
+        <span class="slide-badge"><i class="ri-star-fill"></i> Classical Ballet</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
        HERO SECTION
        ========================================== -->
   <section class="hero" id="hero">
@@ -74,7 +139,8 @@
           <span class="highlight">From Patna to the World</span> — Dance, Music & Arts Begin Here
         </h1>
         <p class="hero-description">
-          Experience world-class training in Dance, Music Instruments (Guitar, Flute, Keyboard) & Creative Art & Craft in a state-of-the-art academy located at Ramkrishna Nagar, Patna.
+          Experience world-class training in Dance, Guitar & String Instruments, and Creative Art & Craft
+          in a state-of-the-art academy located at Ramkrishna Nagar, Patna.
         </p>
 
         <div class="hero-buttons">
@@ -105,33 +171,66 @@
 
       <!-- Right Visual Feature -->
       <div class="hero-visual animate-on-scroll">
-        <div class="hero-img-wrapper">
-          <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=800&auto=format&fit=crop&q=80"
-            alt="Professional Dancer Performing at Trang Dance Class">
+        <!-- Interactive Hero 5-Slide Carousel -->
+        <div class="hero-img-wrapper hero-slider">
+          <div class="hero-slides" id="heroSlides">
+            <div class="hero-slide active">
+              <img src="image/image1.jpeg" alt="Dance Performance">
+              <div class="hero-slide-caption">Contemporary & Ballet Practice</div>
+            </div>
+            <div class="hero-slide">
+              <img src="image/image2.jpeg" alt="Guitar & Music Practice">
+              <div class="hero-slide-caption">Acoustic & Electric Guitar</div>
+            </div>
+            <div class="hero-slide">
+              <img src="image/image3.jpeg" alt="Urban Hip Hop Cypher">
+              <div class="hero-slide-caption">Urban Hip Hop & Grooves</div>
+            </div>
+            <div class="hero-slide">
+              <img src="image/image4.jpeg" alt="Creative Art & Craft">
+              <div class="hero-slide-caption">Creative Art & Craft Studio</div>
+            </div>
+            <div class="hero-slide">
+              <img src="image/image5.jpeg" alt="Studio Tour">
+              <div class="hero-slide-caption">Studio Tour</div>
+            </div>
+          </div>
+
+          <!-- Hero Slider Dots -->
+          <div class="hero-slider-dots" id="heroSliderDots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+            <span class="dot" data-index="4"></span>
+          </div>
         </div>
 
-        <!-- Floating Decorative Badges -->
-        <div class="floating-badge badge-top">
-          <div class="badge-icon">
-            <i class="ri-star-fill"></i>
-          </div>
-          <div class="badge-text">
-            <strong>4.5 / 5.0 Rating</strong>
-            <span>Based on 20+ Reviews</span>
-          </div>
-        </div>
 
-        <div class="floating-badge badge-bottom">
-          <div class="badge-icon" style="background-color: var(--accent-gold-soft); color: var(--accent-secondary);">
-            <i class="ri-gift-fill"></i>
-          </div>
-          <div class="badge-text">
-            <strong>1st Class 100% Free</strong>
-            <span>No Commitment Required</span>
+
+            <!-- Floating Decorative Badges -->
+            <div class="floating-badge badge-top">
+              <div class="badge-icon">
+                <i class="ri-star-fill"></i>
+              </div>
+              <div class="badge-text">
+                <strong>4.5 / 5.0 Rating</strong>
+                <span>Based on 20+ Reviews</span>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-bottom">
+              <div class="badge-icon"
+                style="background-color: var(--accent-gold-soft); color: var(--accent-secondary);">
+                <i class="ri-gift-fill"></i>
+              </div>
+              <div class="badge-text">
+                <strong>1st Class 100% Free</strong>
+                <span>No Commitment Required</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
   </section>
 
   <!-- ==========================================
@@ -194,15 +293,14 @@
       <div class="section-header animate-on-scroll">
         <div class="section-badge"><i class="ri-palette-line"></i> Explore Courses</div>
         <h2 class="section-title">Dance, Music & Creative Art Classes</h2>
-        <p class="section-subtitle">Discover your creative potential across Dance, Musical Instruments (Guitar, Flute), and Fine Art & Crafts for all ages in Patna.</p>
+        <p class="section-subtitle">Discover your creative potential across Dance, Guitar & String Instruments, and Creative Art & Crafts for all ages in Patna.</p>
       </div>
 
       <!-- Category Filter Controls -->
       <div class="filter-bar animate-on-scroll">
         <button class="filter-btn active" data-filter="all">All Courses</button>
         <button class="filter-btn" data-filter="dance">Dance Styles</button>
-        <button class="filter-btn" data-filter="music">Guitar & Instruments</button>
-        <button class="filter-btn" data-filter="flute">Flute & Music</button>
+        <button class="filter-btn" data-filter="music">Guitar & Music</button>
         <button class="filter-btn" data-filter="art">Art & Craft</button>
         <button class="filter-btn" data-filter="kids">Kids Special</button>
       </div>
@@ -250,27 +348,7 @@
           </div>
         </div>
 
-        <!-- Card 3: Flute & Wind Instruments -->
-        <div class="program-card animate-on-scroll" data-category="flute">
-          <div class="program-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1573871666457-7c7329118cf9?w=600&auto=format&fit=crop&q=80"
-              alt="Flute Music Class">
-            <span class="program-category" style="background: rgba(16, 185, 129, 0.85);">Flute Music</span>
-            <span class="program-level">Beginner to Adv</span>
-          </div>
-          <div class="program-content">
-            <h3 class="program-title">Classical & Western Flute</h3>
-            <p class="program-desc">Master breath control, posture, finger technique, classical raagas, and soothing melodies.</p>
-            <div class="program-meta">
-              <div class="meta-item"><i class="ri-time-line"></i> 45 Mins</div>
-              <div class="meta-item"><i class="ri-music-2-line"></i> Melodic</div>
-              <button class="btn btn-primary btn-sm open-booking-modal"
-                data-class="Classical & Western Flute">Join</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4: Art & Craft Studio -->
+        <!-- Card 3: Art & Craft Studio -->
         <div class="program-card animate-on-scroll" data-category="art">
           <div class="program-img-wrapper">
             <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80"
@@ -290,47 +368,7 @@
           </div>
         </div>
 
-        <!-- Card 5: Fine Arts & Canvas Painting -->
-        <div class="program-card animate-on-scroll" data-category="art">
-          <div class="program-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&auto=format&fit=crop&q=80"
-              alt="Canvas Painting Class">
-            <span class="program-category" style="background: rgba(147, 51, 234, 0.85);">Fine Arts</span>
-            <span class="program-level">All Skill Tiers</span>
-          </div>
-          <div class="program-content">
-            <h3 class="program-title">Fine Arts & Canvas Painting</h3>
-            <p class="program-desc">Learn acrylic on canvas, watercolor blending, portrait sketching, oil pastel art, and color theory.</p>
-            <div class="program-meta">
-              <div class="meta-item"><i class="ri-time-line"></i> 90 Mins</div>
-              <div class="meta-item"><i class="ri-brush-line"></i> Fine Art</div>
-              <button class="btn btn-primary btn-sm open-booking-modal"
-                data-class="Fine Arts & Canvas Painting">Join</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 6: Keyboard & Piano -->
-        <div class="program-card animate-on-scroll" data-category="music">
-          <div class="program-img-wrapper">
-            <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=600&auto=format&fit=crop&q=80"
-              alt="Keyboard Piano Class">
-            <span class="program-category" style="background: rgba(217, 119, 6, 0.85);">Piano & Keyboard</span>
-            <span class="program-level">All Levels</span>
-          </div>
-          <div class="program-content">
-            <h3 class="program-title">Keyboard & Piano Masterclass</h3>
-            <p class="program-desc">Develop key coordination, sheet reading, scales, harmony, and song arrangements.</p>
-            <div class="program-meta">
-              <div class="meta-item"><i class="ri-time-line"></i> 60 Mins</div>
-              <div class="meta-item"><i class="ri-music-fill"></i> Keyboard</div>
-              <button class="btn btn-primary btn-sm open-booking-modal"
-                data-class="Keyboard & Piano Masterclass">Join</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 7: Contemporary & Bollywood Dance -->
+        <!-- Card 4: Contemporary & Bollywood Dance -->
         <div class="program-card animate-on-scroll" data-category="dance">
           <div class="program-img-wrapper">
             <img src="https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?w=600&auto=format&fit=crop&q=80"
@@ -340,7 +378,7 @@
           </div>
           <div class="program-content">
             <h3 class="program-title">Bollywood & Classical Dance</h3>
-            <p class="program-desc">High-spirited cinematic routines combining Indian classical postures with modern fusion choreography.</p>
+            <p class="program-desc">High-spirited routines combining Indian classical posture and modern cinematic styles.</p>
             <div class="program-meta">
               <div class="meta-item"><i class="ri-time-line"></i> 60 Mins</div>
               <div class="meta-item"><i class="ri-flashlight-line"></i> Fitness & Fun</div>
@@ -350,7 +388,7 @@
           </div>
         </div>
 
-        <!-- Card 8: Kids Special -->
+        <!-- Card 5: Kids Special -->
         <div class="program-card animate-on-scroll" data-category="kids">
           <div class="program-img-wrapper">
             <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&auto=format&fit=crop&q=80"
@@ -473,7 +511,7 @@
           </div>
           <div class="instructor-details">
             <h3 class="instructor-name">Vikramaditya Roy</h3>
-            <p class="instructor-role">Guitar & Flute Master Trainer</p>
+            <p class="instructor-role">Guitar & String Instruments Master Trainer</p>
             <p class="instructor-exp"><i class="ri-briefcase-line"></i> 11+ Years Experience</p>
           </div>
         </div>
@@ -602,8 +640,8 @@
           <div class="social-card-icon yt"><i class="ri-youtube-fill"></i></div>
           <div class="social-card-info" style="flex-grow: 1;">
             <h4>YouTube Channel</h4>
-            <p>@TrangDanceOfficial • 100K+ Subs</p>
-            <a href="https://youtube.com" target="_blank" class="btn btn-secondary btn-sm"
+            <p>@TarangDanceStudio • upgrowing</p>
+            <a href="https://www.youtube.com/@TarangDanceStudio" target="_blank" class="btn btn-secondary btn-sm"
               style="padding: 0.35rem 0.85rem; font-size: 0.8rem;">
               <i class="ri-youtube-fill" style="color: #ff0000;"></i> Subscribe
             </a>
@@ -615,8 +653,8 @@
           <div class="social-card-icon ig"><i class="ri-instagram-line"></i></div>
           <div class="social-card-info" style="flex-grow: 1;">
             <h4>Instagram Reels</h4>
-            <p>@trangdanceclass • 55K+ Followers</p>
-            <a href="https://instagram.com" target="_blank" class="btn btn-secondary btn-sm"
+            <p>@tarangdance.studio • upgrowing</p>
+            <a href="https://www.instagram.com/tarangdance.studio" target="_blank" class="btn btn-secondary btn-sm"
               style="padding: 0.35rem 0.85rem; font-size: 0.8rem;">
               <i class="ri-instagram-line" style="color: #e1306c;"></i> Follow Reels
             </a>
@@ -659,14 +697,13 @@
             <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
               class="ri-star-fill"></i><i class="ri-star-fill"></i>
           </div>
-          <p class="quote-text">"Joining Trang Dance Class was the best decision of my year! The Hip Hop instructors
-            break down complex steps so easily, and the energy in the studio is electric!"</p>
+          <p class="quote-text">"Patna has never had such a premium academy! The Hip Hop trainers teach all moves step-by-step. The bright glassmorphic design of the studio makes you feel so energized!"</p>
           <div class="author-info">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-              alt="Samantha K.">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80"
+              alt="Aman Verma">
             <div class="author-details">
-              <h5>Samantha K.</h5>
-              <p>Hip Hop & Salsa Student</p>
+              <h5>Aman Verma</h5>
+              <p>Hip Hop Dance Student</p>
             </div>
           </div>
         </div>
@@ -676,14 +713,13 @@
             <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
               class="ri-star-fill"></i><i class="ri-star-fill"></i>
           </div>
-          <p class="quote-text">"The white studio environment is super clean, bright, and welcoming. I started as a
-            complete beginner in Contemporary and performed on stage after 3 months!"</p>
+          <p class="quote-text">"I joined the acoustic guitar batch here. The teacher is brilliant! Within two months, I can play lead chords and solo melodies easily. Highly recommend this academy for music lovers in Patna."</p>
           <div class="author-info">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
-              alt="David Miller">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80"
+              alt="Rahul Sen">
             <div class="author-details">
-              <h5>David Miller</h5>
-              <p>Contemporary Flow Student</p>
+              <h5>Rahul Sen</h5>
+              <p>Guitar & Music Student</p>
             </div>
           </div>
         </div>
@@ -693,14 +729,13 @@
             <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i
               class="ri-star-fill"></i><i class="ri-star-fill"></i>
           </div>
-          <p class="quote-text">"My 8-year-old daughter loves the Junior Dance Academy batch. Instructor Elena is so
-            patient and creative. Highly recommended for parents!"</p>
+          <p class="quote-text">"The weekend Art & Craft classes are super creative and fun. Learnt clay modeling, sketching, and watercolor design. Positive, bright, and highly professional vibe!"</p>
           <div class="author-info">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80"
-              alt="Ananya Roy">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80"
+              alt="Karan Malhotra">
             <div class="author-details">
-              <h5>Ananya Roy</h5>
-              <p>Parent of Junior Student</p>
+              <h5>Karan Malhotra</h5>
+              <p>Art & Craft Student</p>
             </div>
           </div>
         </div>
@@ -946,7 +981,8 @@
         <div class="section-badge" style="margin-bottom: 0.5rem;"><i class="ri-ticket-2-line"></i> Pass Registration
         </div>
         <h2>Reserve Your Spot</h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Join us for an exciting Dance, Music or Art session at Trang Academy.</p>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Join us for an exciting Dance, Music or Art session at
+          Trang Academy.</p>
       </div>
 
       <form id="bookingModalForm"

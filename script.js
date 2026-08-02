@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize modules
   initHeaderScroll();
   initMobileNav();
+  initHeroSlider();
   initProgramFilters();
   initScheduleTabs();
   initWhatsAppWidget();
@@ -316,11 +317,11 @@ function bindBookingButtons() {
 function initLightbox() {
   const galleryItems = document.querySelectorAll('.gallery-item:not(.gallery-video-item)');
   const videoItems = document.querySelectorAll('.gallery-video-item');
-  
+
   const lightboxModal = document.getElementById('lightboxModal');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
-  
+
   const videoModal = document.getElementById('videoModal');
   const videoIframe = document.getElementById('videoIframe');
   const videoClose = document.getElementById('videoClose');
@@ -483,4 +484,55 @@ function initScrollAnimations() {
   document.querySelectorAll('.animate-on-scroll').forEach((el) => {
     observer.observe(el);
   });
+}
+
+/* ==========================================================================
+   11. Hero 5-Slide Auto Carousel
+   ========================================================================== */
+function initHeroSlider() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-slider-dots .dot');
+
+  if (!slides.length || !dots.length) return;
+
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide) => slide.classList.remove('active'));
+    dots.forEach((dot) => dot.classList.remove('active'));
+
+    currentSlide = (index + totalSlides) % totalSlides;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }
+
+  function startAutoSlide() {
+    stopAutoSlide();
+    slideInterval = setInterval(() => {
+      showSlide(currentSlide + 1);
+    }, 1000);
+  }
+
+  function stopAutoSlide() {
+    if (slideInterval) clearInterval(slideInterval);
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const slideIdx = parseInt(dot.getAttribute('data-index'));
+      showSlide(slideIdx);
+      startAutoSlide(); // Reset timer on manual dot click
+    });
+  });
+
+  // Pause auto slider on mouse enter
+  const sliderWrapper = document.querySelector('.hero-slider');
+  if (sliderWrapper) {
+    sliderWrapper.addEventListener('mouseenter', stopAutoSlide);
+    sliderWrapper.addEventListener('mouseleave', startAutoSlide);
+  }
+
+  startAutoSlide();
 }
