@@ -89,7 +89,7 @@ function initMobileNav() {
    3. Dance Program Filtering System
    ========================================================================== */
 function initProgramFilters() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  const filterBtns = document.querySelectorAll('.programs-filter-btn');
   const programCards = document.querySelectorAll('.program-card');
 
   if (!filterBtns.length || !programCards.length) return;

@@ -1765,8 +1765,8 @@ button {
     height: calc(100vh - 70px);
     background-color: var(--bg-primary);
     flex-direction: column;
-    padding: 2rem 1.5rem;
-    gap: 1.25rem;
+    padding: 2.5rem 2rem;
+    gap: 1.5rem;
     transition: var(--transition-normal);
     box-shadow: var(--shadow-lg);
     overflow-y: auto;
@@ -1783,52 +1783,84 @@ button {
   }
 
   .hero {
-    padding-top: 100px;
+    padding-top: 30px;
     padding-bottom: 50px;
   }
 
+  .hero-slider {
+    height: 350px;
+  }
+
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
+    line-height: 1.2;
   }
 
   .hero-description {
     font-size: 1.05rem;
+    margin-bottom: 2rem;
   }
 
   .hero-img-wrapper img {
-    height: 380px;
+    height: 100%;
+  }
+
+  .floating-badge {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .floating-badge .badge-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+
+  .floating-badge .badge-text strong {
+    font-size: 0.75rem;
+  }
+
+  .floating-badge .badge-text span {
+    font-size: 0.65rem;
   }
 
   .floating-badge.badge-top {
-    left: 10px;
-    top: 15px;
-    padding: 0.65rem 0.85rem;
+    left: 8px;
+    top: 10px;
   }
 
   .floating-badge.badge-bottom {
-    right: 10px;
-    bottom: 20px;
-    padding: 0.65rem 0.85rem;
+    right: 8px;
+    bottom: 15px;
   }
 
   .section-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
 
   .section-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .programs-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .features-grid,
   .instructors-grid,
-  .gallery-grid,
   .testimonials-grid,
   .social-cards-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .gallery-video-item {
+    grid-column: span 2;
   }
 
   .footer-grid {
@@ -1889,8 +1921,16 @@ button {
     gap: 0.25rem;
   }
 
+  .hero-slider {
+    height: 280px;
+  }
+
   .hero-title {
-    font-size: 2.1rem;
+    font-size: 1.95rem;
+  }
+
+  .floating-badge {
+    display: none; /* Hide floating badges on very small screen sizes for clean view */
   }
 
   .hero-stats {
@@ -1901,6 +1941,7 @@ button {
   .hero-buttons {
     flex-direction: column;
     width: 100%;
+    gap: 0.75rem;
   }
 
   .hero-buttons .btn {
