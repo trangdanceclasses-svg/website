@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap Location
-Sitemap: https://trangdanceclasses-svg.github.io/website/sitemap.xml
+Sitemap: https://www.trangdanceclasses.com/sitemap.xml
