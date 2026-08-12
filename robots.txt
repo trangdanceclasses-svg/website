@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://trangdanceclasses-svg.github.io/website/sitemap.xml

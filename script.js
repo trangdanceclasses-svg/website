@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initLightbox();
   initCounters();
+  initFAQAccordions();
   initScrollAnimations();
 });
 
@@ -535,4 +536,27 @@ function initHeroSlider() {
   }
 
   startAutoSlide();
+}
+
+/* ==========================================================================
+   FAQ Accordion Module
+   ========================================================================== */
+function initFAQAccordions() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (!faqItems.length) return;
+
+  faqItems.forEach((item) => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+
+      // Close all other open items
+      faqItems.forEach((otherItem) => otherItem.classList.remove('active'));
+
+      // Toggle clicked item
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
+  });
 }
