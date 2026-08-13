@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initCounters();
   initFAQAccordions();
+  initGalleryEngine();
   initScrollAnimations();
 });
 
@@ -559,4 +560,204 @@ function initFAQAccordions() {
       }
     });
   });
+}
+
+/* ==========================================================================
+   Gallery Load More & Google Drive Sync Engine
+   ========================================================================== */
+function initGalleryEngine() {
+  // Google Drive Configuration
+  // To sync automatically with your Google Drive folder, replace these values:
+  const API_KEY = "YOUR_GOOGLE_API_KEY";
+  const FOLDER_ID = "YOUR_GOOGLE_DRIVE_FOLDER_ID";
+
+  const loadMoreBtn = document.getElementById("loadMoreGalleryBtn");
+  const driveContainer = document.getElementById("driveGalleryContainer");
+  const statusBox = document.getElementById("galleryStatus");
+  const errorBox = document.getElementById("galleryError");
+
+  if (!loadMoreBtn || !driveContainer) return;
+
+  let drivePageToken = null;
+  let isDriveConfigured = (
+    API_KEY !== "YOUR_GOOGLE_API_KEY" && 
+    FOLDER_ID !== "YOUR_GOOGLE_DRIVE_FOLDER_ID"
+  );
+  let localExtraIndex = 0;
+
+  // Supplementary high-quality photos loaded when API keys are not set yet
+  const fallbackLocalPhotos = [
+    { src: "https://images.unsplash.com/photo-1547153760-18fc86324498?w=600&auto=format&fit=crop&q=80", title: "Classical Heritage Dance", tag: "Stage Event" },
+    { src: "https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?w=600&auto=format&fit=crop&q=80", title: "Bollywood Annual Celebration", tag: "Festival Dance" },
+    { src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&auto=format&fit=crop&q=80", title: "Junior Kids Dance Graduation", tag: "Kids Batch" },
+    { src: "https://images.unsplash.com/photo-1594145070102-127e2a9b6c08?w=600&auto=format&fit=crop&q=80", title: "Semi-Classical Mudras Practice", tag: "Heritage Dance" },
+    { src: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80", title: "Bhangra & Garba Fest", tag: "Folk Rhythm" },
+    { src: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop&q=80", title: "Acoustic Guitar Jam Session", tag: "Music Studio" }
+  ];
+
+  loadMoreBtn.addEventListener("click", () => {
+    if (isDriveConfigured) {
+      loadGoogleDriveImages();
+    } else {
+      loadFallbackLocalImages();
+    }
+  });
+
+  // Local Fallback Loader
+  function loadFallbackLocalImages() {
+    driveContainer.style.display = "grid";
+    loadMoreBtn.innerHTML = `<i class="ri-loader-4-line spin-icon"></i> Loading More...`;
+
+    setTimeout(() => {
+      const nextBatch = fallbackLocalPhotos.slice(localExtraIndex, localExtraIndex + 3);
+      if (nextBatch.length === 0) {
+        loadMoreBtn.innerHTML = `<i class="ri-check-double-line"></i> All Gallery Photos Loaded`;
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.style.opacity = "0.75";
+        return;
+      }
+
+      nextBatch.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "gallery-item animate-on-scroll animated";
+        card.setAttribute("data-type", "photo");
+        card.innerHTML = `
+          <img src="${item.src}" alt="${item.title}" loading="lazy">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>${item.title}</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">${item.tag}</span>
+          </div>
+        `;
+
+        const img = card.querySelector("img");
+        card.addEventListener("click", () => {
+          const lightboxModal = document.getElementById("lightboxModal");
+          const lightboxImg = document.getElementById("lightboxImg");
+          if (lightboxModal && lightboxImg) {
+            lightboxImg.src = img.src;
+            lightboxModal.classList.add("active");
+          }
+        });
+
+        driveContainer.appendChild(card);
+      });
+
+      localExtraIndex += nextBatch.length;
+
+      if (localExtraIndex >= fallbackLocalPhotos.length) {
+        loadMoreBtn.innerHTML = `<i class="ri-check-double-line"></i> All Gallery Photos Loaded`;
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.style.opacity = "0.75";
+      } else {
+        loadMoreBtn.innerHTML = `<i class="ri-image-add-line"></i> View More Gallery`;
+      }
+    }, 400);
+  }
+
+  // Google Drive V3 API Fetch & Sync Function
+  async function loadGoogleDriveImages() {
+    driveContainer.style.display = "grid";
+    if (statusBox) {
+      statusBox.style.display = "block";
+      statusBox.innerHTML = `<div class="loading"><i class="ri-loader-4-line spin-icon"></i> Syncing images from Google Drive...</div>`;
+    }
+    if (errorBox) errorBox.style.display = "none";
+    loadMoreBtn.innerHTML = `<i class="ri-loader-4-line spin-icon"></i> Syncing Drive...`;
+
+    try {
+      let allFiles = [];
+      const params = new URLSearchParams({
+        key: API_KEY,
+        q: `'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`,
+        fields: "nextPageToken,files(id,name,mimeType,modifiedTime)",
+        orderBy: "modifiedTime desc",
+        pageSize: "100"
+      });
+
+      if (drivePageToken) {
+        params.append("pageToken", drivePageToken);
+      }
+
+      const url = "https://www.googleapis.com/drive/v3/files?" + params.toString();
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(
+          errorData?.error?.message || `Google Drive API error: ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+      allFiles = data.files || [];
+      drivePageToken = data.nextPageToken || null;
+
+      if (allFiles.length === 0 && !driveContainer.children.length) {
+        if (statusBox) statusBox.innerHTML = `<div class="empty">No images found in this Google Drive folder.</div>`;
+        loadMoreBtn.style.display = "none";
+        return;
+      }
+
+      allFiles.forEach((file) => {
+        const card = document.createElement("div");
+        card.className = "gallery-item animate-on-scroll animated";
+        card.setAttribute("data-type", "photo");
+
+        const imageURL = `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`;
+        const fallbackURL = `https://drive.google.com/uc?export=view&id=${file.id}`;
+
+        card.innerHTML = `
+          <img src="${imageURL}" alt="${escapeHTML(file.name)}" loading="lazy" onerror="this.src='${fallbackURL}'">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>${escapeHTML(file.name)}</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Google Drive Sync</span>
+          </div>
+        `;
+
+        card.addEventListener("click", () => {
+          const lightboxModal = document.getElementById("lightboxModal");
+          const lightboxImg = document.getElementById("lightboxImg");
+          if (lightboxModal && lightboxImg) {
+            lightboxImg.src = imageURL;
+            lightboxModal.classList.add("active");
+          }
+        });
+
+        driveContainer.appendChild(card);
+      });
+
+      if (statusBox) {
+        statusBox.textContent = `${driveContainer.children.length} image${driveContainer.children.length === 1 ? "" : "s"} found in Google Drive`;
+      }
+
+      if (!drivePageToken) {
+        loadMoreBtn.innerHTML = `<i class="ri-check-double-line"></i> All Drive Photos Loaded`;
+        loadMoreBtn.disabled = true;
+      } else {
+        loadMoreBtn.innerHTML = `<i class="ri-image-add-line"></i> Load More Drive Photos`;
+      }
+
+    } catch (error) {
+      console.error(error);
+      if (statusBox) statusBox.style.display = "none";
+      if (errorBox) {
+        errorBox.style.display = "block";
+        errorBox.innerHTML = `
+          <div class="error-card">
+            <strong>Could not load Google Drive images.</strong><br>
+            ${escapeHTML(error.message)}
+          </div>
+        `;
+      }
+      loadMoreBtn.innerHTML = `<i class="ri-refresh-line"></i> Retry Drive Sync`;
+    }
+  }
+
+  function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
 }

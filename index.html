@@ -168,6 +168,7 @@
         <a href="#about" class="nav-link">About Us</a>
         <a href="#programs" class="nav-link">Dance, Music & Art</a>
         <a href="#instructors" class="nav-link">Instructors</a>
+        <a href="#gallerySection" class="nav-link">Gallery</a>
         <a href="#faq" class="nav-link">FAQs</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
@@ -749,6 +750,139 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       STUDIO & PERFORMANCE GALLERY (With Google Drive Sync & View More)
+       ========================================== -->
+  <section class="gallery" id="gallerySection">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge"><i class="ri-gallery-line"></i> Studio & Event Gallery</div>
+        <h2 class="section-title">Moments & Performances</h2>
+        <p class="section-subtitle">Explore live dance rehearsals, annual stage events, instrument practice, and creative student projects at Trang Dance Class Patna.</p>
+      </div>
+
+      <!-- Main Gallery Grid (Initial Photos & Video Highlights) -->
+      <div class="gallery-grid" id="mainGalleryGrid">
+        <!-- Gallery Item 1 (Video) -->
+        <div class="gallery-item gallery-video-item animate-on-scroll" data-type="video" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+          <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&auto=format&fit=crop&q=80" alt="Contemporary Flow Video Highlight">
+          <div class="video-card-badge"><i class="ri-youtube-fill"></i> Watch Video</div>
+          <div class="gallery-overlay" style="opacity: 1; background: rgba(15, 23, 42, 0.45);">
+            <div class="video-play-btn"><i class="ri-play-fill"></i></div>
+            <h4>Contemporary Stage Showcase</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Live Student Performance</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 2 (Photo 1) -->
+        <div class="gallery-item animate-on-scroll" data-type="photo">
+          <img src="image/image1.jpeg" alt="Contemporary Ballet Practice">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>Contemporary Ballet Practice</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Student Dance Practice</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 3 (Photo 2) -->
+        <div class="gallery-item animate-on-scroll" data-type="photo">
+          <img src="image/image2.jpeg" alt="Indian Classical Practice">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>Indian Classical Dance</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Classical Kathak & Bharatanatyam</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 4 (Photo 3) -->
+        <div class="gallery-item animate-on-scroll" data-type="photo">
+          <img src="image/image3.jpeg" alt="Urban Hip Hop Class">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>Urban Hip Hop Cypher</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Street Grooves Batch</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 5 (Photo 4) -->
+        <div class="gallery-item animate-on-scroll" data-type="photo">
+          <img src="image/image4.jpeg" alt="Art & Craft Studio">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>Creative Art & Craft Studio</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Origami & Canvas Design</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 6 (Photo 5) -->
+        <div class="gallery-item animate-on-scroll" data-type="photo">
+          <img src="image/image5.jpeg" alt="Studio Practice Tour">
+          <div class="gallery-overlay">
+            <i class="ri-zoom-in-line"></i>
+            <h4>Studio Practice Tour</h4>
+            <span style="font-size: 0.8rem; color: #cbd5e1;">Ramkrishna Nagar Studio</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Loaded / Google Drive Synced Container -->
+      <div id="driveGalleryContainer" class="gallery-grid" style="margin-top: 1.5rem; display: none;"></div>
+
+      <!-- Status and Error Notification Messages -->
+      <div id="galleryStatus" class="gallery-status-msg" style="display: none;"></div>
+      <div id="galleryError" class="gallery-error-msg" style="display: none;"></div>
+
+      <!-- Action Bar: View More Gallery Button -->
+      <div class="gallery-action-bar animate-on-scroll">
+        <button class="btn btn-primary btn-lg" id="loadMoreGalleryBtn">
+          <i class="ri-image-add-line"></i> View More Gallery
+        </button>
+      </div>
+
+      <!-- Social Media Connect Cards -->
+      <div class="social-cards-grid animate-on-scroll">
+        <!-- YouTube Social Card -->
+        <div class="social-card">
+          <div class="social-card-icon yt"><i class="ri-youtube-fill"></i></div>
+          <div class="social-card-info" style="flex-grow: 1;">
+            <h4>YouTube Channel</h4>
+            <p>@TarangDanceStudio • upgrowing</p>
+            <a href="https://www.youtube.com/@TarangDanceStudio" target="_blank" class="btn btn-secondary btn-sm"
+              style="padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+              <i class="ri-youtube-fill" style="color: #ff0000;"></i> Subscribe
+            </a>
+          </div>
+        </div>
+
+        <!-- Instagram Social Card -->
+        <div class="social-card">
+          <div class="social-card-icon ig"><i class="ri-instagram-line"></i></div>
+          <div class="social-card-info" style="flex-grow: 1;">
+            <h4>Instagram Reels</h4>
+            <p>@tarangdance.studio • upgrowing</p>
+            <a href="https://www.instagram.com/tarangdance.studio" target="_blank" class="btn btn-secondary btn-sm"
+              style="padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+              <i class="ri-instagram-line" style="color: #e1306c;"></i> Follow Reels
+            </a>
+          </div>
+        </div>
+
+        <!-- Facebook Social Card -->
+        <div class="social-card">
+          <div class="social-card-icon fb"><i class="ri-facebook-fill"></i></div>
+          <div class="social-card-info" style="flex-grow: 1;">
+            <h4>Facebook Community</h4>
+            <p>Trang Dance Academy • 1K+ Members</p>
+            <a href="https://facebook.com" target="_blank" class="btn btn-secondary btn-sm"
+              style="padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+              <i class="ri-facebook-fill" style="color: #1877f2;"></i> Join Community
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
