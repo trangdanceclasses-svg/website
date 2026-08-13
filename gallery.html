@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo & Video Gallery | Trang Dance Class & Academy Patna</title>
+    <meta name="description"
+        content="Explore the official photo and video gallery of Trang Dance Class Patna. View live studio practice, Kathak, Hip Hop, Semi-Classical performances, and student moments.">
+    <meta name="keywords"
+        content="Trang Dance photos, Patna dance studio gallery, dance class photos Patna, Kathak dance performance photos, Hip Hop cypher photos">
+    <link rel="canonical" href="https://www.trangdanceclasses.com/gallery.html">
+
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Remix Icon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ==========================================
+       HEADER & NAVIGATION BAR
+       ========================================== -->
+    <header class="header scrolled">
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="index.html#hero" class="logo">
+                <div class="logo-icon">
+                    <i class="ri-music-2-fill"></i>
+                </div>
+                <span>TRANG</span> DANCE
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html#hero" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About Us</a>
+                <a href="index.html#programs" class="nav-link">Dance, Music & Art</a>
+                <a href="index.html#instructors" class="nav-link">Instructors</a>
+                <a href="gallery.html" class="nav-link active">Gallery</a>
+                <a href="index.html#faq" class="nav-link">FAQs</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Header Action Buttons -->
+            <div class="nav-actions">
+                <a href="tel:+918521893659" class="btn btn-primary btn-sm">
+                    <i class="ri-phone-fill"></i> Make a Call
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+                    <i class="ri-menu-line"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+       GALLERY PAGE HERO BANNER
+       ========================================== -->
+    <section class="gallery-page-hero">
+        <div class="container">
+            <div class="gallery-hero-content animate-on-scroll animated">
+                <a href="index.html" class="btn btn-secondary btn-sm"
+                    style="margin-bottom: 1rem; display: inline-flex; gap: 0.4rem; align-items: center;">
+                    <i class="ri-arrow-left-line"></i> Back to Homepage
+                </a>
+                <div class="section-badge"><i class="ri-gallery-fill"></i> Full Media Archive</div>
+                <h1 class="section-title">Trang Dance Photo & Video Gallery</h1>
+                <p class="section-subtitle">Browse all studio rehearsal highlights, stage choreography events,
+                    instrument sessions, and creative student projects synced directly from Google Drive.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       FULL GOOGLE DRIVE GALLERY GRID
+       ========================================== -->
+    <section class="gallery" style="padding-top: 2rem; min-height: 60vh;">
+        <div class="container">
+
+            <!-- Gallery Category Filter Tabs -->
+            <div class="filter-bar animate-on-scroll animated" style="margin-bottom: 2rem; display: flex; justify-content: center; gap: 0.75rem;">
+                <button class="filter-btn full-gallery-filter-btn active" data-filter="all">All Media</button>
+                <button class="filter-btn full-gallery-filter-btn" data-filter="image"><i class="ri-image-line"></i> Images</button>
+                <button class="filter-btn full-gallery-filter-btn" data-filter="video"><i class="ri-youtube-line"></i> Videos</button>
+            </div>
+
+            <!-- Status & Counter Notification -->
+            <div id="fullGalleryStatus" class="gallery-status-msg" style="margin-bottom: 1.5rem;">
+                <div class="loading"><i class="ri-loader-4-line spin-icon"></i> Loading media...</div>
+            </div>
+
+            <!-- Error Notification -->
+            <div id="fullGalleryError" class="gallery-error-msg" style="display: none; margin-bottom: 1.5rem;"></div>
+
+            <!-- Dynamic Full Gallery Grid -->
+            <div class="gallery-grid" id="fullDriveGallery"></div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+       FOOTER
+       ========================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div>
+                    <a href="index.html#hero" class="logo" style="margin-bottom: 1rem; display: inline-flex;">
+                        <div class="logo-icon">
+                            <i class="ri-music-2-fill"></i>
+                        </div>
+                        <span>TRANG</span> DANCE
+                    </a>
+                    <p class="footer-desc">
+                        Trang Dance Class is a premier dance academy empowering dancers of all levels with rhythm,
+                        movement technique, and creative self-expression.
+                    </p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/tarangdance.studio" target="_blank" class="social-icon"
+                            aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                        <a href="https://www.youtube.com/@TarangDanceStudio" target="_blank" class="social-icon"
+                            aria-label="YouTube"><i class="ri-youtube-line"></i></a>
+                        <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook"><i
+                                class="ri-facebook-fill"></i></a>
+                        <a href="https://wa.me/918521893659" target="_blank" class="social-icon"
+                            aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#hero">Home</a></li>
+                        <li><a href="index.html#about">About Trang Dance</a></li>
+                        <li><a href="index.html#programs">Dance Styles</a></li>
+                        <li><a href="gallery.html">Full Gallery</a></li>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Dance Genres -->
+                <div>
+                    <h4 class="footer-title">Dance Genres</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#programs">Urban Hip Hop</a></li>
+                        <li><a href="index.html#programs">Indian Classical</a></li>
+                        <li><a href="index.html#programs">Semi-Classical Fusion</a></li>
+                        <li><a href="index.html#programs">Traditional Folk</a></li>
+                        <li><a href="index.html#programs">Kids Special Dance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="footer-title">Studio Address</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted);">
+                        Ramkrishna Nagar, NTPC Colony, Near Ram Krishna Police Station, Patna, Bihar 800027
+                    </p>
+                    <p style="font-size: 0.9rem; font-weight: 600; color: var(--accent-primary);">
+                        <i class="ri-phone-fill"></i> +91 85218 93659
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Trang Dance Class. All Rights Reserved. Designed for Dancers with Passion.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+       FLOATING ACTION WIDGETS
+       ========================================== -->
+    <div class="floating-widgets">
+        <a href="tel:+918521893659" class="call-floating-btn" title="Call Trang Dance Class Now" aria-label="Call Now">
+            <i class="ri-phone-fill"></i>
+        </a>
+        <div style="position: relative;">
+            <button class="whatsapp-btn" id="whatsappBtn" title="Chat on WhatsApp" aria-label="WhatsApp Chat">
+                <div class="whatsapp-pulse"></div>
+                <i class="ri-whatsapp-line"></i>
+            </button>
+            <div class="whatsapp-popover" id="whatsappPopover">
+                <div class="wa-header">
+                    <div class="wa-avatar">TD</div>
+                    <div class="wa-info">
+                        <h5>Trang Dance Support</h5>
+                        <span>Online • Instant Reply</span>
+                    </div>
+                    <button id="waClose"
+                        style="background: none; color: white; margin-left: auto; font-size: 1.2rem;"><i
+                            class="ri-close-line"></i></button>
+                </div>
+                <div class="wa-body">
+                    <div class="wa-bubble">
+                        Hello! 👋 Welcome to <strong>Trang Dance Class Gallery</strong>. Have questions about our
+                        classes or events?
+                    </div>
+                </div>
+                <div class="wa-footer">
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="text" id="waInput" placeholder="Type a message..." class="form-control"
+                            style="font-size: 0.85rem; padding: 0.5rem 0.8rem; border-radius: var(--radius-full);">
+                        <button id="waSend" class="btn btn-primary btn-sm"
+                            style="padding: 0.5rem 0.8rem; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                            <i class="ri-send-plane-2-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       YOUTUBE VIDEO PLAYER MODAL & LIGHTBOX MODAL
+       ========================================== -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-content"
+            style="max-width: 850px; padding: 1rem; background: #0f172a; border-radius: var(--radius-md);">
+            <button class="modal-close" id="videoClose" style="top: -15px; right: -15px; background: white;"><i
+                    class="ri-close-line"></i></button>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-sm);">
+                <iframe id="videoIframe" src="" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen title="Trang Dance YouTube Video Player"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="lightboxModal">
+        <div class="modal-content" style="max-width: 850px; padding: 1rem; background: transparent; box-shadow: none;">
+            <button class="modal-close" id="lightboxClose" style="top: -15px; right: -15px; background: white;"><i
+                    class="ri-close-line"></i></button>
+            <img id="lightboxImg" src="" alt="Gallery Lightbox Image"
+                style="border-radius: var(--radius-md); max-height: 85vh; width: 100%; object-fit: contain; box-shadow: var(--shadow-lg);">
+        </div>
+    </div>
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+</body>
+
+</html>
