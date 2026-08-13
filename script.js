@@ -318,8 +318,8 @@ function bindBookingButtons() {
    7. Gallery Lightbox Modal
    ========================================================================== */
 function initLightbox() {
-  const galleryItems = document.querySelectorAll('.gallery-item:not(.gallery-video-item)');
-  const videoItems = document.querySelectorAll('.gallery-video-item');
+  const galleryItems = document.querySelectorAll('.gallery-item:not([data-type="video"]):not(.see-more-card)');
+  const videoItems = document.querySelectorAll('.gallery-item[data-type="video"], .gallery-video-item');
 
   const lightboxModal = document.getElementById('lightboxModal');
   const lightboxImg = document.getElementById('lightboxImg');
@@ -330,16 +330,18 @@ function initLightbox() {
   const videoClose = document.getElementById('videoClose');
 
   // Photo Lightbox
-  if (galleryItems.length && lightboxModal && lightboxImg) {
-    galleryItems.forEach((item) => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (img) {
-          lightboxImg.src = img.src;
-          lightboxModal.classList.add('active');
-        }
+  if (lightboxModal && lightboxImg) {
+    if (galleryItems.length) {
+      galleryItems.forEach((item) => {
+        item.addEventListener('click', () => {
+          const img = item.querySelector('img');
+          if (img) {
+            lightboxImg.src = img.src;
+            lightboxModal.classList.add('active');
+          }
+        });
       });
-    });
+    }
 
     if (lightboxClose) {
       lightboxClose.addEventListener('click', () => {
@@ -355,19 +357,21 @@ function initLightbox() {
   }
 
   // YouTube Video Modal Player
-  if (videoItems.length && videoModal && videoIframe) {
-    videoItems.forEach((item) => {
-      item.addEventListener('click', () => {
-        const videoId = item.getAttribute('data-video-id') || 'dQw4w9WgXcQ';
-        videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-        videoModal.classList.add('active');
-      });
-    });
+  const closeVideo = () => {
+    if (videoModal) videoModal.classList.remove('active');
+    if (videoIframe) videoIframe.src = '';
+  };
 
-    const closeVideo = () => {
-      videoModal.classList.remove('active');
-      videoIframe.src = '';
-    };
+  if (videoModal && videoIframe) {
+    if (videoItems.length) {
+      videoItems.forEach((item) => {
+        item.addEventListener('click', () => {
+          const videoId = item.getAttribute('data-video-id') || 'dQw4w9WgXcQ';
+          videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+          videoModal.classList.add('active');
+        });
+      });
+    }
 
     if (videoClose) {
       videoClose.addEventListener('click', closeVideo);
@@ -375,6 +379,13 @@ function initLightbox() {
 
     videoModal.addEventListener('click', (e) => {
       if (e.target === videoModal) {
+        closeVideo();
+      }
+    });
+
+    // Also close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && videoModal.classList.contains('active')) {
         closeVideo();
       }
     });
