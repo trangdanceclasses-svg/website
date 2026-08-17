@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initFAQAccordions();
   initHomeDriveGallery();
+  initHomeDriveVideos();
   initFullGalleryPage();
   initScrollAnimations();
 });
@@ -575,10 +576,11 @@ function initFAQAccordions() {
 }
 
 /* ==========================================================================
-   GOOGLE DRIVE GALLERY ENGINE (4 Max on Homepage, Full on Gallery Page)
+   GOOGLE DRIVE GALLERY ENGINE (Images + Videos from Drive Folders)
    ========================================================================== */
 const GOOGLE_DRIVE_API_KEY = "AIzaSyCGmhdUOIpBGdYlRhxjXQX3IlUSr-CIiy4";
 const GOOGLE_DRIVE_FOLDER_ID = "1Fqzyj2Gl9wIMz_IBUJRe9dQCilBylEOK";
+const GOOGLE_DRIVE_VIDEO_FOLDER_ID = "1OGIYLtFYkYnEsY8MWBLqjssv_RnSL37k";
 
 // Fallback sample photos displayed when API keys are not configured yet
 const DEFAULT_DRIVE_FALLBACK_IMAGES = [
@@ -592,6 +594,13 @@ const DEFAULT_DRIVE_FALLBACK_IMAGES = [
   { src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&auto=format&fit=crop&q=80", name: "Junior Kids Dance Graduation" }
 ];
 
+// Fallback sample videos (used when Drive API is not reachable)
+const DEFAULT_DRIVE_FALLBACK_VIDEOS = [
+  { type: "video", driveId: "demo1", title: "Dance Practice Highlights", thumbnail: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80" },
+  { type: "video", driveId: "demo2", title: "Hip Hop Workshop Session", thumbnail: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=600&auto=format&fit=crop&q=80" },
+  { type: "video", driveId: "demo3", title: "Classical Dance Recital", thumbnail: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&auto=format&fit=crop&q=80" }
+];
+
 function isDriveConfigured() {
   return (
     GOOGLE_DRIVE_API_KEY !== "YOUR_GOOGLE_API_KEY" &&
@@ -603,6 +612,42 @@ function escapeHTML(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+/* Helper: Fetch files from a Google Drive folder */
+async function fetchDriveFiles(folderId, mimeTypeFilter, maxResults) {
+  let allFiles = [];
+  let pageToken = null;
+
+  do {
+    const params = new URLSearchParams({
+      key: GOOGLE_DRIVE_API_KEY,
+      q: `'${folderId}' in parents and mimeType contains '${mimeTypeFilter}' and trashed = false`,
+      fields: "nextPageToken,files(id,name,mimeType,modifiedTime)",
+      orderBy: "modifiedTime desc",
+      pageSize: maxResults ? String(maxResults) : "1000"
+    });
+    if (pageToken) params.append("pageToken", pageToken);
+
+    const url = "https://www.googleapis.com/drive/v3/files?" + params.toString();
+    const response = await fetch(url);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.error?.message || `Google Drive API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data.files) allFiles.push(...data.files);
+    pageToken = data.nextPageToken || null;
+
+    // If we have a max and already have enough, stop
+    if (maxResults && allFiles.length >= maxResults) {
+      allFiles = allFiles.slice(0, maxResults);
+      break;
+    }
+  } while (pageToken);
+
+  return allFiles;
 }
 
 /* Helper to create gallery image cards */
@@ -629,6 +674,40 @@ function createDriveImageCard(src, name, fallbackSrc) {
     if (lightboxModal && lightboxImg) {
       lightboxImg.src = src;
       lightboxModal.classList.add("active");
+    }
+  });
+
+  return card;
+}
+
+/* Helper to create Google Drive video cards */
+function createDriveVideoCard(file) {
+  const card = document.createElement("div");
+  card.className = "gallery-item gallery-grid-item animate-on-scroll animated";
+  card.setAttribute("data-type", "video");
+  card.setAttribute("data-drive-video-id", file.id);
+
+  const thumbnailURL = `https://drive.google.com/thumbnail?id=${file.id}&sz=w600`;
+  const fallbackThumb = "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80";
+  // Clean up filename for display (remove extension)
+  const displayName = file.name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
+
+  card.innerHTML = `
+    <img src="${thumbnailURL}" alt="${escapeHTML(displayName)}" loading="lazy" onerror="this.src='${fallbackThumb}'">
+    <span class="video-card-badge"><i class="ri-play-circle-fill"></i> Video</span>
+    <div class="gallery-overlay" style="opacity: 1; background: rgba(15, 23, 42, 0.45);">
+      <div class="video-play-btn"><i class="ri-play-fill"></i></div>
+      <h4>${escapeHTML(displayName)}</h4>
+      <span style="font-size: 0.8rem; color: #cbd5e1;">Google Drive Video</span>
+    </div>
+  `;
+
+  card.addEventListener("click", () => {
+    const videoModal = document.getElementById("videoModal");
+    const videoIframe = document.getElementById("videoIframe");
+    if (videoModal && videoIframe) {
+      videoIframe.src = `https://drive.google.com/file/d/${file.id}/preview`;
+      videoModal.classList.add("active");
     }
   });
 
@@ -700,6 +779,50 @@ async function initHomeDriveGallery() {
   }
 }
 
+/* 1b. Homepage Drive Videos (Shows 3 videos in Row 1) */
+async function initHomeDriveVideos() {
+  const container = document.getElementById("homeDriveVideosContainer");
+  if (!container) return;
+
+  if (!isDriveConfigured()) {
+    // Show fallback video cards
+    DEFAULT_DRIVE_FALLBACK_VIDEOS.slice(0, 3).forEach((item) => {
+      const fakeFile = { id: item.driveId, name: item.title };
+      const card = createDriveVideoCard(fakeFile);
+      container.appendChild(card);
+    });
+    return;
+  }
+
+  try {
+    const files = await fetchDriveFiles(GOOGLE_DRIVE_VIDEO_FOLDER_ID, "video/", 3);
+    container.innerHTML = "";
+
+    if (files.length === 0) {
+      DEFAULT_DRIVE_FALLBACK_VIDEOS.slice(0, 3).forEach((item) => {
+        const fakeFile = { id: item.driveId, name: item.title };
+        const card = createDriveVideoCard(fakeFile);
+        container.appendChild(card);
+      });
+      return;
+    }
+
+    files.slice(0, 3).forEach((file) => {
+      const card = createDriveVideoCard(file);
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Drive video fetch error:", error);
+    container.innerHTML = "";
+    DEFAULT_DRIVE_FALLBACK_VIDEOS.slice(0, 3).forEach((item) => {
+      const fakeFile = { id: item.driveId, name: item.title };
+      const card = createDriveVideoCard(fakeFile);
+      container.appendChild(card);
+    });
+  }
+}
+
 /* 2. Full Dedicated Gallery Page (Supports All, Image, Video Filters & Drive Sync) */
 async function initFullGalleryPage() {
   const container = document.getElementById("fullDriveGallery");
@@ -709,55 +832,36 @@ async function initFullGalleryPage() {
 
   if (!container) return;
 
-  // Pre-defined choreography YouTube videos for gallery page
-  const videoItems = [
-    { type: "video", videoId: "L3wKzyIN1yk", title: "Annual Contemporary Showcase", tag: "Watch Choreography Video", img: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&auto=format&fit=crop&q=80" },
-    { type: "video", videoId: "2Vv-BfVoq4g", title: "Urban Hip Hop Workshop Highlights", tag: "Watch Student Cypher", img: "https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=600&auto=format&fit=crop&q=80" },
-    { type: "video", videoId: "YQHsXMglC9A", title: "Latin Salsa Couples Night Live", tag: "Watch Social Dance Session", img: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?w=600&auto=format&fit=crop&q=80" },
-    { type: "video", videoId: "dQw4w9WgXcQ", title: "Kathak Classical Recital Live", tag: "Indian Classical Recital", img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&auto=format&fit=crop&q=80" }
-  ];
-
-  let driveImageItems = [];
+  let driveVideoItems = []; // { type: "video", file: {id, name} }
+  let driveImageItems = []; // { type: "image", src, fallbackSrc, name }
   let currentFilter = "all";
 
-  // Fetch Google Drive images
   if (isDriveConfigured()) {
-    if (statusBox) statusBox.innerHTML = `<div class="loading"><i class="ri-loader-4-line spin-icon"></i> Syncing images from Google Drive...</div>`;
+    if (statusBox) statusBox.innerHTML = `<div class="loading"><i class="ri-loader-4-line spin-icon"></i> Syncing media from Google Drive...</div>`;
+
+    // Fetch Drive Videos
     try {
-      let pageToken = null;
-      do {
-        const params = new URLSearchParams({
-          key: GOOGLE_DRIVE_API_KEY,
-          q: `'${GOOGLE_DRIVE_FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`,
-          fields: "nextPageToken,files(id,name,mimeType,modifiedTime)",
-          orderBy: "modifiedTime desc",
-          pageSize: "1000"
-        });
-        if (pageToken) params.append("pageToken", pageToken);
-
-        const url = "https://www.googleapis.com/drive/v3/files?" + params.toString();
-        const response = await fetch(url);
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => null);
-          throw new Error(errorData?.error?.message || `Google Drive API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (data.files) {
-          data.files.forEach((file) => {
-            driveImageItems.push({
-              type: "image",
-              src: `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`,
-              fallbackSrc: `https://drive.google.com/uc?export=view&id=${file.id}`,
-              name: file.name
-            });
-          });
-        }
-        pageToken = data.nextPageToken || null;
-      } while (pageToken);
-
+      const videoFiles = await fetchDriveFiles(GOOGLE_DRIVE_VIDEO_FOLDER_ID, "video/", null);
+      videoFiles.forEach((file) => {
+        driveVideoItems.push({ type: "video", file: file });
+      });
     } catch (err) {
-      console.error(err);
+      console.error("Drive video fetch error:", err);
+    }
+
+    // Fetch Drive Images
+    try {
+      const imageFiles = await fetchDriveFiles(GOOGLE_DRIVE_FOLDER_ID, "image/", null);
+      imageFiles.forEach((file) => {
+        driveImageItems.push({
+          type: "image",
+          src: `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`,
+          fallbackSrc: `https://drive.google.com/uc?export=view&id=${file.id}`,
+          name: file.name
+        });
+      });
+    } catch (err) {
+      console.error("Drive image fetch error:", err);
       if (errorBox) {
         errorBox.style.display = "block";
         errorBox.innerHTML = `<div class="error-card">Google Drive error: ${escapeHTML(err.message)}</div>`;
@@ -765,14 +869,17 @@ async function initFullGalleryPage() {
     }
   }
 
-  // Fallback sample images if drive items empty or unconfigured
+  // Fallback images if empty
   if (driveImageItems.length === 0) {
     DEFAULT_DRIVE_FALLBACK_IMAGES.forEach((item) => {
-      driveImageItems.push({
-        type: "image",
-        src: item.src,
-        name: item.name
-      });
+      driveImageItems.push({ type: "image", src: item.src, name: item.name });
+    });
+  }
+
+  // Fallback videos if empty
+  if (driveVideoItems.length === 0) {
+    DEFAULT_DRIVE_FALLBACK_VIDEOS.forEach((item) => {
+      driveVideoItems.push({ type: "video", file: { id: item.driveId, name: item.title } });
     });
   }
 
@@ -782,9 +889,9 @@ async function initFullGalleryPage() {
     let itemsToRender = [];
 
     if (currentFilter === "all") {
-      itemsToRender = [...videoItems, ...driveImageItems];
+      itemsToRender = [...driveVideoItems, ...driveImageItems];
     } else if (currentFilter === "video") {
-      itemsToRender = [...videoItems];
+      itemsToRender = [...driveVideoItems];
     } else if (currentFilter === "image") {
       itemsToRender = [...driveImageItems];
     }
@@ -796,29 +903,7 @@ async function initFullGalleryPage() {
 
     itemsToRender.forEach((item) => {
       if (item.type === "video") {
-        const card = document.createElement("div");
-        card.className = "gallery-item gallery-grid-item animate-on-scroll animated";
-        card.setAttribute("data-type", "video");
-        card.setAttribute("data-video-id", item.videoId);
-        card.innerHTML = `
-          <img src="${item.img}" alt="${escapeHTML(item.title)}">
-          <span class="video-card-badge"><i class="ri-youtube-fill"></i> YouTube</span>
-          <div class="gallery-overlay" style="opacity: 1; background: rgba(15, 23, 42, 0.45);">
-            <div class="video-play-btn"><i class="ri-play-fill"></i></div>
-            <h4>${escapeHTML(item.title)}</h4>
-            <span style="font-size: 0.8rem; color: #cbd5e1;">${escapeHTML(item.tag)}</span>
-          </div>
-        `;
-
-        card.addEventListener("click", () => {
-          const videoModal = document.getElementById("videoModal");
-          const videoIframe = document.getElementById("videoIframe");
-          if (videoModal && videoIframe) {
-            videoIframe.src = `https://www.youtube.com/embed/${item.videoId}?autoplay=1`;
-            videoModal.classList.add("active");
-          }
-        });
-
+        const card = createDriveVideoCard(item.file);
         container.appendChild(card);
       } else {
         const card = createDriveImageCard(item.src, item.name, item.fallbackSrc);
