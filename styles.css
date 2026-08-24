@@ -277,6 +277,17 @@ button {
   color: var(--accent-primary);
 }
 
+.logo img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.05);
+}
+
 .nav-links {
   display: flex;
   align-items: center;

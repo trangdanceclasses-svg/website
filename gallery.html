@@ -34,19 +34,17 @@
         <div class="container nav-container">
             <!-- Logo -->
             <a href="index.html#hero" class="logo">
-                <div class="logo-icon">
-                    <i class="ri-music-2-fill"></i>
-                </div>
+                <img src="logo.png" alt="Trang Dance  Logo">
                 <span>TRANG</span> DANCE
             </a>
 
             <!-- Navigation Links -->
             <nav class="nav-links" id="navLinks">
                 <a href="index.html#hero" class="nav-link">Home</a>
+                <a href="gallery.html" class="nav-link active">Videos and Images</a>
                 <a href="index.html#about" class="nav-link">About Us</a>
                 <a href="index.html#programs" class="nav-link">Dance, Music & Art</a>
                 <a href="index.html#instructors" class="nav-link">Instructors</a>
-                <a href="gallery.html" class="nav-link active">Gallery</a>
                 <a href="index.html#faq" class="nav-link">FAQs</a>
                 <a href="index.html#contact" class="nav-link">Contact</a>
             </nav>
@@ -88,10 +86,13 @@
         <div class="container">
 
             <!-- Gallery Category Filter Tabs -->
-            <div class="filter-bar animate-on-scroll animated" style="margin-bottom: 2rem; display: flex; justify-content: center; gap: 0.75rem;">
+            <div class="filter-bar animate-on-scroll animated"
+                style="margin-bottom: 2rem; display: flex; justify-content: center; gap: 0.75rem;">
                 <button class="filter-btn full-gallery-filter-btn active" data-filter="all">All Media</button>
-                <button class="filter-btn full-gallery-filter-btn" data-filter="image"><i class="ri-image-line"></i> Images</button>
-                <button class="filter-btn full-gallery-filter-btn" data-filter="video"><i class="ri-youtube-line"></i> Videos</button>
+                <button class="filter-btn full-gallery-filter-btn" data-filter="image"><i class="ri-image-line"></i>
+                    Images</button>
+                <button class="filter-btn full-gallery-filter-btn" data-filter="video"><i class="ri-youtube-line"></i>
+                    Videos</button>
             </div>
 
             <!-- Status & Counter Notification -->
@@ -117,9 +118,7 @@
                 <!-- Brand Info -->
                 <div>
                     <a href="index.html#hero" class="logo" style="margin-bottom: 1rem; display: inline-flex;">
-                        <div class="logo-icon">
-                            <i class="ri-music-2-fill"></i>
-                        </div>
+                        <img src="logo.png" alt="Trang Dance  Logo">
                         <span>TRANG</span> DANCE
                     </a>
                     <p class="footer-desc">
@@ -231,8 +230,10 @@
             style="max-width: 850px; padding: 1rem; background: #0f172a; border-radius: var(--radius-md);">
             <button class="modal-close" id="videoClose" style="top: -15px; right: -15px; background: white;"><i
                     class="ri-close-line"></i></button>
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-sm);">
-                <iframe id="videoIframe" src="" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"
+            <div
+                style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-sm);">
+                <iframe id="videoIframe" src=""
+                    style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen title="Trang Dance YouTube Video Player"></iframe>
             </div>
